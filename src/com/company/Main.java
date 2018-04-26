@@ -1,7 +1,5 @@
 package com.company;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.io.PrintWriter;
 
 public class Main {
 
@@ -33,62 +31,16 @@ public class Main {
         }
         reader.close(); //Close scanner to save resources
 
-        MarioPrint(number, filePrint);
-    }
-
-    /*This function accepts our user inputted number, boolean to determine if writing to a text file,
-    and makes a mario-style pyramid out of it. */
-    public static void MarioPrint(int n, boolean printToFile)
-    {
-        String fileName = "output.txt"; //output text file
-        int variable = 20+n; //This number is what we'll base the spacing on during the loop.
-        int upperBound = variable + 2;
-        try
+        //Initialize our printer/ MarioPrinter.
+        MarioPrint printer = new MarioPrint();
+        if (filePrint)
         {
-            PrintWriter outputStream = new PrintWriter(fileName);
-            //Creates a number of lines for 'drawing' as defined by 'n'.
-            for (int i = 0; i < n; i++)
-            {
-                //Prints our spaces.
-                for (int j = 0; j < variable; j++)
-                {
-                    if (!printToFile) //output to console.
-                    {
-                        System.out.print(" ");
-                    }
-                    else if (printToFile) //output to file.
-                    {
-                        outputStream.print(" ");
-                    }
-                }
-                //Prints our #'s.
-                for (int k = 0; k < (upperBound-variable); k++)
-                {
-                    if (!printToFile) //output to console.
-                    {
-                        System.out.print("#");
-                    }
-                    else if (printToFile) //output to file.
-                    {
-                        outputStream.print("#");
-                    }
-                }
-                variable--; //We negatively increment this so that our spaces will go down as our amount of #'s go up.
-                //This is simply to reset the printer to the next line.
-                if (!printToFile && i < n-1)
-                {
-                    System.out.println();
-                }
-                if (printToFile && i < n-1)
-                {
-                    outputStream.println();
-                }
-            }
-            outputStream.close();
+            printer.setPrintMethod(new FilePrint());
         }
-        catch (FileNotFoundException e)
+        else
         {
-            e.printStackTrace();
+            printer.setPrintMethod(new ConsolePrint());
         }
+        printer.operation((number));
     }
 }
