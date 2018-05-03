@@ -1,5 +1,7 @@
 package com.company;
 
+//This file is unnecessary for Factory Switch Method in PS3 branch. Please ignore it.
+
 public class MarioPrint implements PrintSwitch
 {
     //This is our 'master switch' class.

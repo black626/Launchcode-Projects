@@ -1,5 +1,7 @@
 package com.company;
 
+//This file is unnecessary for Factory Switch Method in PS3 branch. Please ignore it.
+
 //Prints our Mario pyramid to the console.
 public class ConsolePrint implements PrintSwitch
 {
