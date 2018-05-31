@@ -1,5 +1,5 @@
 gitCmds.txt
 output.txt
-dir_to_ignore/out/
-dir_to_ignore/.idea/
+out/
+.idea/
 .iml
