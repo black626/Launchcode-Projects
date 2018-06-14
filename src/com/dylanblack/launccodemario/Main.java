@@ -1,4 +1,4 @@
-package com.company;
+package com.dylanblack.launccodemario;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -35,9 +35,12 @@ public class Main {
             answer = reader.next().charAt(0);
         }
         reader.close(); //Close scanner to save resources
-
+      
+        //Create a new pyramid instance:
+        Pyramid pyramid = new Pyramid();
         //Send answers to our 'pyramid factory' for output.
-        String result = new Pyramid().makePyramid(number);
+        pyramid.getInstance().makePyramid(number);
+        String result = pyramid.getInstance().toString();
 
         //If we want to print to file:
         if (Character.toLowerCase(answer) == 'y')

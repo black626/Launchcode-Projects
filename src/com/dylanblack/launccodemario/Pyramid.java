@@ -1,4 +1,4 @@
-package com.company;
+package com.dylanblack.launccodemario;
 
 /*
 This class is an attempt at trying the 'Factory Design Pattern'.
@@ -8,11 +8,30 @@ The output is in the form of a String.
 
 public class Pyramid
 {
-    public String makePyramid(int number)
+
+    //Constructor of our 'Pyramid' class, made up of a 'textline' stringbuilder.
+    private StringBuilder textline;
+    public Pyramid()
+    {
+      textline = new StringBuilder();
+    }
+
+    private static Pyramid pyramid;
+
+    //"Getter" method for Singleton design pattern:
+    public static Pyramid getInstance()
+    {
+      if (pyramid == null)
+      {
+        pyramid = new Pyramid();
+      }
+      return pyramid;
+    }
+
+    public Pyramid makePyramid(int number)
     {
         int variable = 20+number; //This number is what we'll base the spacing on during the loop.
         int upperBound = variable + 2;
-        StringBuilder result = new StringBuilder(); //Efficient to append each char to a StringBuilder.
 
         //Creates a number of lines for 'drawing' as defined by 'n'.
         for (int i = 0; i < number; i++)
@@ -20,29 +39,27 @@ public class Pyramid
             //Saves our spaces.
             for (int j = 0; j < variable; j++)
             {
-                result.append(' ');
+                textline.append(' ');
             }
             //Saves our #'s.
             for (int k = 0; k < (upperBound-variable); k++)
             {
-                result.append('#');
+                textline.append('#');
             }
             variable--; //We negatively increment this so that our spaces will go down as our amount of #'s go up.
             //Sets the pyramid to a new line:
             if (i < (number-1)) //(With the exception of the last line)
             {
-                result.append('\n');
+                textline.append('\n');
             }
         }
 
-        return result.toString();
-        //Stringbuilder already has a .toString override function to suit our needs.
+        return pyramid;
     }
 
-
-    /*@Override
     public String toString()
     {
+      return pyramid.textline.toString();
+    }
 
-    }*/
 }

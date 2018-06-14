@@ -1,4 +1,4 @@
-package com.company;
+package com.dylanblack.launccodemario;
 
 //This file is unnecessary for Factory Switch Method in PS3 branch. Please ignore it.
 
