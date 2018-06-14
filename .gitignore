@@ -1,5 +1,12 @@
+# Files to ignore:
 gitCmds.txt
 output.txt
+*.iml
+**\src\com\dylanblack\launccodemario\FilePrint.java
+**\src\com\dylanblack\launccodemario\ConsolePrint.java
+**\src\com\dylanblack\launccodemario\PrintSwitch.java
+**\src\com\dylanblack\launccodemario\MarioPrint.java
+
+# Folders to ignore:
 out/
 .idea/
-.iml
