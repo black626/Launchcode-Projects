@@ -1,4 +1,7 @@
 package com.dylanblack.launccodemario;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -14,9 +17,13 @@ public class Mario
     public static void main(String[] args)
     {
 	    System.out.println("Welcome to the Mario program!");
-	    Mario mario1 = new Mario(Pyramid.getInstance());
 
-	    mario1.start();
+	    //Load our xml application file, create beans (objects).
+      ApplicationContext context =
+          new ClassPathXmlApplicationContext("application.xml");
+	    //Search for "mario1" bean and grab it.
+      Mario obj = (Mario) context.getBean("mario1");
+	    obj.start();
     }
 
     //Reference to this instance's pyramid:
