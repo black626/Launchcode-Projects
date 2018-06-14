@@ -2,10 +2,10 @@
 gitCmds.txt
 output.txt
 *.iml
-**\src\com\dylanblack\launccodemario\FilePrint.java
-**\src\com\dylanblack\launccodemario\ConsolePrint.java
-**\src\com\dylanblack\launccodemario\PrintSwitch.java
-**\src\com\dylanblack\launccodemario\MarioPrint.java
+**\launccodemario\FilePrint.java
+**\launccodemario\ConsolePrint.java
+**\launccodemario\PrintSwitch.java
+**\launccodemario\MarioPrint.java
 
 # Folders to ignore:
 out/
