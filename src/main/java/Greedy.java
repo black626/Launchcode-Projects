@@ -48,7 +48,7 @@ public class Greedy {
         int cents = Integer.parseInt(in.substring(in.length() - 2)); //grabs last two #'s
         int dollars = Integer.parseInt(in.substring(1, in.length() - 3)); //grabs #'s before '.##',
           //excludes the '$' sign
-        if (usCurrency)
+        if (usCurrency) //US Currency.
         {
           if (dollars != 0)
           {
@@ -56,11 +56,16 @@ public class Greedy {
           }
           System.out.println(usCC.calculateChange(cents));
         }
-        else if (!usCurrency)
+        else if (!usCurrency) //EU Currency.
         {
-          if (dollars != 0)
+          if (dollars != 0 && dollars < 4)
           {
             System.out.println("You will give back €" + dollars + " coins.");
+          }
+          else if (dollars >= 5) //just a little joke.
+          {
+            System.out.println("You will give back €" + dollars + " coins. " +
+                "(Might I suggest using a €5 bill or larger, instead?)");
           }
           System.out.println(euCC.calculateChange(cents));
         }

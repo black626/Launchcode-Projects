@@ -75,14 +75,16 @@ public class USCoinCalculator implements CoinChange
           }
         }
 
+        //counts amount of different coins we have.
         for (int count = 0; count < coinCount.length; count++)
         {
           if (coinCount[count] != 0)
           {
-            nonZeroCoinCount++; //counts amount of different coins we have.
+            nonZeroCoinCount++;
           }
         }
 
+        //Creating our (String) output:
         for (int count = 0; count < coinCount.length; count++)
         {
           if (coinCount[count] != 0) //if we have a value for quarter/ nickel/ ext.
