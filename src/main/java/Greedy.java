@@ -7,8 +7,13 @@
 import org.junit.Test;
 
 import java.util.Scanner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Greedy {
+
+    private static String input;
+    private static char symbol;
 
     //Take an argument (string) and calculates the amount of change needed.
     public static void main(String[] args)
@@ -27,7 +32,7 @@ public class Greedy {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Greedy application!");
         System.out.println("Please enter the change amount, leading with a '$' or '€' sign.");
-        String input = scanner.nextLine(); //Example: $3.27
+        input = scanner.nextLine(); //Example: $3.27
         //error/ input check:
         while ((input.charAt(0) != '$') && (input.charAt(0) != '€'))
         {
@@ -35,20 +40,33 @@ public class Greedy {
           input = scanner.nextLine();
         }
         scanner.close(); //close scanner to save resources.
-        char symbol = input.charAt(0); //Grabs $ or € sign
-        Greedy greed = new Greedy(input, (symbol=='$'));
+        symbol = input.charAt(0); //Grabs $ or € sign
+
+        //Load our xml application file, create beans (objects).
+        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+        //Search for "greedy1" bean and grab it.
+        Greedy obj = (Greedy) context.getBean("greedy1");
+        obj.start();
+
+        ((ClassPathXmlApplicationContext) context).close(); //close beans to save resources.
     }
 
-    private USCoinCalculator usCC = new USCoinCalculator();
-    private EUCoinCalculator euCC = new EUCoinCalculator();
+    private USCoinCalculator usCC;
+    private EUCoinCalculator euCC;
 
-    //constructor
-    public Greedy(String in, boolean usCurrency)
+    //constructor w/ Dependency Injection
+    public Greedy(USCoinCalculator usCC, EUCoinCalculator euCC)
     {
-        int cents = Integer.parseInt(in.substring(in.length() - 2)); //grabs last two #'s
-        int dollars = Integer.parseInt(in.substring(1, in.length() - 3)); //grabs #'s before '.##',
-          //excludes the '$' sign
-        if (usCurrency) //US Currency.
+      this.euCC = euCC;
+      this.usCC = usCC;
+    }
+
+    public void start()
+    {
+        int cents = Integer.parseInt(input.substring(input.length() - 2)); //grabs last two #'s
+        int dollars = Integer.parseInt(input.substring(1, input.length() - 3)); //grabs #'s before '
+        // .##', excludes the '$' sign
+        if (symbol=='$') //US Currency.
         {
           if (dollars != 0)
           {
@@ -56,7 +74,7 @@ public class Greedy {
           }
           System.out.println(usCC.calculateChange(cents));
         }
-        else if (!usCurrency) //EU Currency.
+        else if (symbol!='$') //EU Currency.
         {
           if (dollars != 0 && dollars < 4)
           {
