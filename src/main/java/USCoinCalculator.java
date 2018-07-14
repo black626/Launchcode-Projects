@@ -47,6 +47,11 @@ public class USCoinCalculator implements CoinChange
           usCC = new USCoinCalculator();
         }
 
+        if (change == 0)
+        {
+          return "No coin change needed.";
+        }
+
         while (change > 0) //While we have change to work with:
         {
           if(change >= 25) //Case for: quarter
@@ -69,54 +74,64 @@ public class USCoinCalculator implements CoinChange
             coinCount[3]++; //add a penny to the count.
             change --;
           }
-          else //change is 0 on first input.
+          else //change is 0 on 2nd+ input. Shouldn't occur.
           {
-            return "No coin change needed.";
+            return "Error.";
           }
         }
 
-        //counts amount of different coins we have.
-        for (int count = 0; count < coinCount.length; count++)
+        return outputGeneration();
+    }
+
+    //Compiles our output String into a readable, grammatical format.
+    public String outputGeneration()
+    {
+      //counts amount of different coins we have.
+      for (int coinIndex = 0; coinIndex < coinCount.length; coinIndex++)
+      {
+        if (coinCount[coinIndex] != 0)
         {
-          if (coinCount[count] != 0)
-          {
-            nonZeroCoinCount++;
-          }
+          nonZeroCoinCount++;
         }
+      }
 
-        //Creating our (String) output:
-        for (int count = 0; count < coinCount.length; count++)
+      //Creating our (String) output:
+      for (int coinIndex = 0; coinIndex < coinCount.length; coinIndex++)
+      {
+        if (coinCount[coinIndex] != 0) //if we have a value for quarter/ nickel/ ext.
         {
-          if (coinCount[count] != 0) //if we have a value for quarter/ nickel/ ext.
+          output.append(coinCount[coinIndex] + " " + coinNames[coinIndex]); //write our coin + amount
+
+          //Singular/ plural spell check:
+          if (coinCount[coinIndex] > 1 && (coinNames[coinIndex]!= "penn"))
           {
-            output.append(coinCount[count] + " " + coinNames[count]); //write our coin + amount
-
-            //Singular/ plural spell check:
-            if (coinCount[count] > 1 && (coinNames[count]!= "penn"))
-            {
-              output.append("s");
-            }
-            if (coinCount[count] > 1 && (coinNames[count]== "penn"))
-            {
-              output.append("ies");
-            }
-
-            //Adds commas, 'and, ', ext. for proper grammar.
-            if (nonZeroCoinCount > 2) //and it is second to last coin listed...
-              {
-                output.append(", "); //we have (at least) 2 more coin types.
-              }
-              if (nonZeroCoinCount == 2)
-              {
-                output.append(", and "); //we have 1 more coin type.
-              }
-              if (nonZeroCoinCount == 1)
-              {
-                output.append("."); //we are at the last coin type.
-              }
-            nonZeroCoinCount--; //reduce remaining coin types, since we just listed one.
+            output.append("s"); //multiple quarter's'/dime's'
           }
+          if (coinCount[coinIndex] == 1 && (coinNames[coinIndex]=="penn"))
+          {
+            output.append("y"); //singular penn'y'
+          }
+          if (coinCount[coinIndex] > 1 && (coinNames[coinIndex]== "penn"))
+          {
+            output.append("ies"); //multiple penn'ies'
+          }
+
+          //Adds commas, 'and, ', ext. for proper grammar.
+          if (nonZeroCoinCount > 2) //and it is second to last coin listed...
+          {
+            output.append(", "); //we have (at least) 2 more coin types.
+          }
+          if (nonZeroCoinCount == 2)
+          {
+            output.append(", and "); //we have 1 more coin type.
+          }
+          if (nonZeroCoinCount == 1)
+          {
+            output.append("."); //we are at the last coin type.
+          }
+          nonZeroCoinCount--; //reduce remaining coin types, since we just listed one.
         }
-        return output.toString();
+      }
+      return output.toString();
     }
 }

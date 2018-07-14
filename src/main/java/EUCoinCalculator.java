@@ -43,6 +43,10 @@ public class EUCoinCalculator implements CoinChange
       euCC = new EUCoinCalculator();
     }
 
+    if (change == 0)
+    {
+      return "No coin change needed.";
+    }
 
     while (change > 0)
     {
@@ -76,50 +80,57 @@ public class EUCoinCalculator implements CoinChange
         coinCount[5]++; //add a 1 euro coin to the count.
         change -= 1;
       }
-      else //Nothing left to return.
+      else //change is 0 on 2nd+ input. Shouldn't occur.
       {
-        return "No coins returned";
+        return "Error.";
       }
     }
 
-    //counts amount of different coins we have.
-    for (int count = 0; count < coinCount.length; count++)
-    {
-      if (coinCount[count] != 0)
-      {
-        nonZeroCoinCount++;
-      }
-    }
-
-    //Creating our (String) output:
-    for (int count = 0; count < coinCount.length; count++)
-    {
-      if (coinCount[count] != 0) //if we have a value for 50/20-Euro coin, ext.
-      {
-        output.append(coinCount[count] + " " + coinNames[count]); //write our coin + amount
-
-        //Singular/ plural spell check:
-        if (coinCount[count] > 1)
-        {
-          output.append("s");
-        }
-
-        //Adds commas, 'and, ', ext. for proper grammar.
-        if (nonZeroCoinCount > 2) //and it is second to last coin listed...
-        {
-          output.append(", "); //we have (at least) 2 more coin types.
-        }
-        if (nonZeroCoinCount == 2)
-        {
-          output.append(", and "); //we have 1 more coin type.
-        }
-        if (nonZeroCoinCount == 1)
-        {
-          output.append("."); //we are at the last coin type.
-        }
-        nonZeroCoinCount--; //reduce remaining coin types, since we just listed one.
-      }
-    }
-    return output.toString();
+    return outputGeneration();
   }
+
+    //Compiles our output String into a readable, grammatical format.
+    public String outputGeneration()
+    {
+      //counts amount of different coins we have.
+      for (int coinIndex = 0; coinIndex < coinCount.length; coinIndex++)
+      {
+        if (coinCount[coinIndex] != 0)
+        {
+          nonZeroCoinCount++;
+        }
+      }
+
+      //Creating our (String) output:
+      for (int coinIndex = 0; coinIndex < coinCount.length; coinIndex++)
+      {
+        if (coinCount[coinIndex] != 0) //if we have a value for 50/20-Euro coin, ext.
+        {
+          output.append(coinCount[coinIndex] + " " + coinNames[coinIndex]); //write our coin + amount
+
+          //Singular/ plural spell check:
+          if (coinCount[coinIndex] > 1)
+          {
+            output.append("s");
+          }
+
+          //Adds commas, 'and, ', ext. for proper grammar.
+          if (nonZeroCoinCount > 2) //and it is second to last coin listed...
+          {
+            output.append(", "); //we have (at least) 2 more coin types.
+          }
+          if (nonZeroCoinCount == 2)
+          {
+            output.append(", and "); //we have 1 more coin type.
+          }
+          if (nonZeroCoinCount == 1)
+          {
+            output.append("."); //we are at the last coin type.
+          }
+          nonZeroCoinCount--; //reduce remaining coin types, since we just listed one.
+        }
+      }
+
+      return output.toString();
+    }
 }
