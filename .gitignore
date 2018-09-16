@@ -10,3 +10,5 @@ output.txt
 # Folders to ignore:
 out/
 .idea/
+#ignore .class files from output:
+target/
