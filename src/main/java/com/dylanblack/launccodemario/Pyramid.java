@@ -10,9 +10,9 @@ public class Pyramid
 {
 
     //Constructor of our 'Pyramid' class, made up of a 'textline' stringbuilder.
-    private static StringBuilder textline;
-    private static int lines;
-    private static Pyramid pyramid;
+    private static StringBuilder textline; //Text output
+    private static int lines; //Number of lines we're working with.
+    private static Pyramid pyramid; //Reference point.
 
     public Pyramid(int number)
     {
@@ -61,6 +61,7 @@ public class Pyramid
         return pyramid;
     }
 
+    //Override .toString so that it returns our stringbuilder, rather than hash for our object.
     public String toString()
     {
       return pyramid.textline.toString();

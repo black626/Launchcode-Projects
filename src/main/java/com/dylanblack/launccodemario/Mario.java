@@ -26,12 +26,12 @@ public class Mario
 	    obj.start();
     }
 
-    //Reference to this instance's pyramid:
-    private PyramidFactory PyramidFactory;
+    //Reference to this instance's pyramidFactory:
+    private PyramidFactory pyramidFactory;
     //Constructor for our Mario (Main) class:
     public Mario (PyramidFactory pyramidFactory)
     {
-      this.PyramidFactory = pyramidFactory;
+      this.pyramidFactory = pyramidFactory;
     }
 
     public void start()
@@ -59,12 +59,10 @@ public class Mario
       }
       reader.close(); //Close scanner to save resources
 
-      //Create a new pyramid instance:
-      PyramidFactory pyramidFactory = new PyramidFactory();
-      //pyramidFactory.Pyramid(number);
-      //Send answers to our 'pyramid factory' for output.
-      //pyramidFactory.makePyramid();
-      String result = pyramidFactory.Pyramid(number);
+      //Create a new pyramidFactory instance:
+      Pyramid currentPyramid = pyramidFactory.Pyramid(number);
+      //Grab our pyramid's result
+      String result = currentPyramid.toString();
 
       //If we want to print to file:
       if (Character.toLowerCase(answer) == 'y')
