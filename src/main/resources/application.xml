@@ -7,11 +7,11 @@
 
       <!-- grab reference for 'mario1' object using 'pyramid as a parameter-->
       <bean id="mario1" class="com.dylanblack.launccodemario.Mario">
-        <constructor-arg name="pyramid" ref="pyramid"/>
+        <constructor-arg name="pyramidFactory" ref="pyramidFactory"/>
       </bean>
 
       <!-- reference for 'pyramid' with an empty constructor-->
-      <bean id="pyramid" class="com.dylanblack.launccodemario.Pyramid">
+      <bean id="pyramidFactory" class="com.dylanblack.launccodemario.PyramidFactory">
       </bean>
 
 </beans>
