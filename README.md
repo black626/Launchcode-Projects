@@ -1,2 +1,0 @@
-# Launchcode-Greedy
-Launchcode Projects

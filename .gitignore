@@ -1,3 +1,14 @@
-*.iml
-.idea
-target
+#Files to ignore:
+sqlTips.txt
+*.exe
+*.sql
+*.sh
+*.md
+*.db
+!src/*.db
+
+#Folders to ignore:
+target/
+raw/
+gen/
+.idea/
