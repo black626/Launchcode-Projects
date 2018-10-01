@@ -4,7 +4,6 @@ sqlTips.txt
 *.sql
 *.sh
 *.md
-*.db
 !src/*.db
 
 #Folders to ignore:
