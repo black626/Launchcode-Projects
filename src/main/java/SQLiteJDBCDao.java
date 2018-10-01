@@ -17,13 +17,15 @@ public class SQLiteJDBCDao implements MetrolinkDao
     public static final String JDBC_SQLITE_METROLINK_DB = "jdbc:sqlite:metrolink.db";
     public static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
 
-    private static Connection conn = null;
-    private static String query;
+    private Connection conn = null;
+    private String query;
+    private PreparedStatement prepStatement;
+    private ResultSet resultSet;
 
-    //private AppOutput appOutput = new AppOutput();
     private ScreenOutput screenOutput = new ScreenOutput();
 
-    //Grabs all of our stops from the metrolink data.
+    //Grabs all of our stops from the metrolink data. (Assumption: this method will always be
+    // called before the others, hence why getConnection() is here.)
     public List<Stop> getStopsAllStops()
     {
       //Attempt to connect to our database first:
@@ -34,20 +36,18 @@ public class SQLiteJDBCDao implements MetrolinkDao
       }
 
       screenOutput.print("Fetching metrolink stations...");
-      query = "Select Distinct stop_name from metrolink_stops where stop_name like '%METROLINK " +
-          "STATION%' order by stop_name";
+      query = "Select * from metrolink_stops";//this will grab all stops (long list).
       try
       {
-        PreparedStatement prepStatement = conn.prepareStatement(query);
-        ResultSet resultSet = prepStatement.executeQuery();
-        //System.out.println("Successful SQL Query.");     //Just a checkpoint.
-        List<Stop> stops = new ArrayList<Stop>();
+        prepStatement = conn.prepareStatement(query);
+        resultSet = prepStatement.executeQuery();
+        List<Stop> stops = new ArrayList<>();
         while (resultSet.next())
         {
           Stop currentStop = new Stop();
           currentStop.setStop_name(resultSet.getString("stop_name"));
+          currentStop.setStopArrival_Time(resultSet.getString("arrival_time"));
           stops.add(currentStop);
-          //System.out.println(resultSet.getString("stop_name"));     //Manual printing to console.
         }
         return stops;
       }
@@ -56,6 +56,51 @@ public class SQLiteJDBCDao implements MetrolinkDao
         //Should only reach here if something goes awry.
         throw new RuntimeException("Error, exception.");
       }
+    }
+
+    //Outputs a list of all unique stops from our database.
+    public List<String> getAllUniqueStops()
+    {
+      query = "Select Distinct stop_name from metrolink_stops where stop_name like '%METROLINK " +
+        "STATION%' order by stop_name";
+      List<String> uniqueStops = new ArrayList<>();
+      try
+      {
+        prepStatement = conn.prepareStatement(query);
+        resultSet = prepStatement.executeQuery();
+        while (resultSet.next())
+        {
+          uniqueStops.add(resultSet.getString("stop_name"));
+        }
+      }
+      catch (SQLException e)
+      {
+        //Just in case something breaks.
+        throw new RuntimeException("Error, exception.");
+      }
+      return uniqueStops;
+    }
+
+    //Outputs a list of all unique times of a given Metrolink stop.
+    public List<String> getAllTimesOfStop(String stopName)
+    {
+      query = "Select Distinct arrival_time from metrolink_stops where stop_name='"+stopName+"' " +
+          "order by arrival_time";
+      List<String> allTimesOfStop = new ArrayList<>();
+      try
+      {
+        prepStatement = conn.prepareStatement(query);
+        resultSet = prepStatement.executeQuery();
+        while (resultSet.next())
+        {
+          allTimesOfStop.add(resultSet.getString("arrival_time"));
+        }
+      }
+      catch (SQLException e)
+      {
+        throw new RuntimeException("Error, exception.");
+      }
+      return allTimesOfStop;
     }
 
     //Connects to our database.

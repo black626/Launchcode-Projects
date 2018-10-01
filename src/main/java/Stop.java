@@ -2,13 +2,10 @@ public class Stop
 {
   //Stops need to have a name, and stop description for the object.
   private String stop_name;
-  private String stop_description;
+  private String stopArrival_Time;
 
   //Basic, plain constructor.
-  public Stop()
-  {
-
-  }
+  public Stop(){}
 
   //setter method for our stop_name.
   public void setStop_name(String input)
@@ -17,10 +14,7 @@ public class Stop
   }
 
   //setter method for our stop_description.
-  public void setStop_description(String input)
-  {
-    stop_description = input;
-  }
+  public void setStopArrival_Time(String input){stopArrival_Time = input;}
 
   //getter method for our stop_name.
   public String getStop_name()
@@ -29,8 +23,5 @@ public class Stop
   }
 
   //getter method for our stop_description.
-  public String getStop_description()
-  {
-    return stop_description;
-  }
+  public String getStopArrival_Time(){ return stopArrival_Time;}
 }
