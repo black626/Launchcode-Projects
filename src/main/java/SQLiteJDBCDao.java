@@ -18,7 +18,7 @@ public class SQLiteJDBCDao implements MetrolinkDao
     Note: this (string/ url path) pointing to our database is currently set up to read the
     database from our resource folder. Hence, if the database location is moved, this file path
     will also have to be updated, otherwise if sqlite cannot find the .db it will create one with
-     the same name, but be empty, causing a crash upon loading the database's tables.
+     the same name, but be empty, causing a crash upon loading the database tables.
      */
     public static final String JDBC_SQLITE_METROLINK_DB =
         "jdbc:sqlite:src/main/resources/metrolink.db";
