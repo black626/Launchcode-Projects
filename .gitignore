@@ -5,6 +5,8 @@ sqlTips.txt
 *.sh
 *.md
 !src/*.db
+*.log
+hbm.log.1
 
 #Folders to ignore:
 target/
