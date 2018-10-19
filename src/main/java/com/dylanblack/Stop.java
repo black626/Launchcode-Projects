@@ -2,9 +2,6 @@ package com.dylanblack;
 
 import javax.persistence.*;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
-
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -14,28 +11,20 @@ public class Stop
   //Set up information about our stop through Hibernate:
   @Id
   @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "trip_headsign")
+  private String trip_headsign;
   @Column(name = "stop_name")
   private String stop_name;
+  @Column(name = "route_color")
+  private int route_color;
+  @Column(name = "route type")
+  private int route_type;
+  @Column(name = "stop_sequence")
+  private int stop_sequence;
   @Column(name = "arrival_time")
   private String arrival_time;
-
-  public Stop() { }
-
-  @Setter
-  public void setStop_name(String stop_name) {
-    this.stop_name = stop_name;
-  }
-
-  @Setter
-  public void setArrival_time(String arrival_time) { this.arrival_time = arrival_time; }
-
-  @Getter
-  public String getStop_name() {
-    return stop_name;
-  }
-
-  @Getter
-  public String getArrival_time() {
-    return arrival_time;
-  }
+  @Column(name = "departure_time")
+  private String departure_time;
+  @Column(name = "service_id")
+  private String service_id;
 }
