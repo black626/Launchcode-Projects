@@ -2,10 +2,8 @@ package com.dylanblack;//Main class for running our app.
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +15,7 @@ import java.time.LocalTime;
 public class TrainData
 {
   @Autowired
-  private ScreenOutput screenOutput;
+  private AppOutput appOutput;
   @Autowired
   private MetrolinkDao metroLinkDao;
 
@@ -35,11 +33,11 @@ public class TrainData
   {
     List<String> allStopNames = metroLinkDao.getAllUniqueStops();//List of unique stop names.
     //~COSMETIC~ print of our metrolink stops:
-    screenOutput.printStops(allStopNames);
+    appOutput.printStops(allStopNames);
 
     //Query user as to what station they're at:
     Scanner reader = new Scanner(System.in);
-    screenOutput.print("Of these, which station are you currently located at?");
+    appOutput.print("Of these, which station are you currently located at?");
     String answer = reader.nextLine().toUpperCase();
     boolean nameCheck = false;
     //Check user's answer to our list of stop names:
@@ -56,14 +54,14 @@ public class TrainData
       if (!nameCheck)
       {
         //name input of current stop doesn't match any of our stops in allStops list.
-        screenOutput.print("Cannot find that stop. Please list one from the list above.");
+        appOutput.print("Cannot find that stop. Please list one from the list above.");
         answer = reader.nextLine().toUpperCase(); //re-record answer.
       }
     }
     reader.close(); //Close our scanner to save resources.
     //Get the time of the next stop for our station.
     String nextStop = metroLinkDao.getNextTimeOfStop(answer);
-    screenOutput.print("Registered your stop.");
+    appOutput.print("Registered your stop.");
 
     //Get the current time, compare, and let the user know when the next arrival time at their
     // stop is.
@@ -78,17 +76,17 @@ public class TrainData
     //Tell the user the time until the next train:
     if (difference > 0)
     {
-      screenOutput.print("The next train is arriving in " + (difference + " minute(s)" +
+      appOutput.print("The next train is arriving in " + (difference + " minute(s)" +
           "."));
     }
     else if (difference == 0)
     {
-      screenOutput.print("The train is currently at your station, departing soon.");
+      appOutput.print("The train is currently at your station, departing soon.");
     }
     else //sometimes during debug we can get an output = to the minute or two prior, hence
     // 'today' is 1 or more minutes past when we manually checked the output.
     {
-      screenOutput.print("Unexpected error calculating next train arrival time.");
+      appOutput.print("Unexpected error calculating next train arrival time.");
     }
   }
 }

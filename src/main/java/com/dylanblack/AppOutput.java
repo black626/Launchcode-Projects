@@ -3,7 +3,10 @@ com.dylanblack.AppOutput interface is designed to handle our instantiation and m
 classes.
  */
 
+import java.util.List;
+
 public interface AppOutput
 {
     void print (String input);
+    void printStops(List<String> allUniqueStops);
 }
