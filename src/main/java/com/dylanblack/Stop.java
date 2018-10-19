@@ -27,9 +27,7 @@ public class Stop
   }
 
   @Setter
-  public void setArrival_time(String arrival_time) {
-    this.arrival_time = arrival_time;
-  }
+  public void setArrival_time(String arrival_time) { this.arrival_time = arrival_time; }
 
   @Getter
   public String getStop_name() {

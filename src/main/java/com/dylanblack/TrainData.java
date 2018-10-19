@@ -18,6 +18,9 @@ public class TrainData
 {
   @Autowired
   private ScreenOutput screenOutput;
+  @Autowired
+  private MetrolinkDao metroLinkDao;
+
 
   public static void main(String[] args) throws Exception
   {
@@ -30,9 +33,7 @@ public class TrainData
 
   private void runApp()
   {
-    SQLiteJDBCDao sqlConnection = new SQLiteJDBCDao();
-    //List<Stop> allStops = sqlConnection.getStopsAllStops();     //List of ALL of our stops.
-    List<String> allStopNames = sqlConnection.getAllUniqueStops();//List of unique stop names.
+    List<String> allStopNames = metroLinkDao.getAllUniqueStops();//List of unique stop names.
     //~COSMETIC~ print of our metrolink stops:
     screenOutput.printStops(allStopNames);
 
@@ -61,14 +62,12 @@ public class TrainData
     }
     reader.close(); //Close our scanner to save resources.
     //Get the time of the next stop for our station.
-    String nextStop = sqlConnection.getNextTimeOfStop(answer);
-    //arrival_Times = sqlConnection.getAllTimesOfStop(answer);
+    String nextStop = metroLinkDao.getNextTimeOfStop(answer);
     screenOutput.print("Registered your stop.");
 
     //Get the current time, compare, and let the user know when the next arrival time at their
     // stop is.
     LocalTime today = LocalTime.now();
-    //String nextStop = findNextTime(arrival_Times);
     int minutes = Integer.parseInt(nextStop.substring(3,5));
     //If next time is into the next hour, add +60 minutes to compensate.
     if (today.getHour() < Integer.parseInt(nextStop.substring(0,2)))
@@ -86,7 +85,8 @@ public class TrainData
     {
       screenOutput.print("The train is currently at your station, departing soon.");
     }
-    else
+    else //sometimes during debug we can get an output = to the minute or two prior, hence
+    // 'today' is 1 or more minutes past when we manually checked the output.
     {
       screenOutput.print("Unexpected error calculating next train arrival time.");
     }
